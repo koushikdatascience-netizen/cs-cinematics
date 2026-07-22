@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CS Cinematics creates polished films for weddings, brands, commercials, reels and music videos.">
+  <meta name="theme-color" content="#020202">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CS Cinematics | Advanced Cinematic Editing">
+  <meta property="og:description" content="Cinematic editing, color grading, motion graphics and post-production for films, brands, reels and weddings.">
+  <meta property="og:image" content="social-preview.svg">
+  <meta property="og:url" content="https://cscinematics.pages.dev/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CS Cinematics | Advanced Cinematic Editing">
+  <meta name="twitter:description" content="Film-grade edits, motion graphics, color systems and sound design for stories that need to feel premium.">
+  <meta name="twitter:image" content="social-preview.svg">
+  <title>CS Cinematics | Films That Remember</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://res.cloudinary.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar" id="top">
+    <a class="mini-brand" href="#top" aria-label="CS Cinematics home">
+      <span>*</span>
+      <strong>CS Cinematics</strong>
+      <small>Vol. 07</small>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#showreel">Showreel</a>
+      <a href="#lab">Lab</a>
+      <a href="#archive">Archive</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="#showreel">Showreel</a>
+    <a href="#lab">Lab</a>
+    <a href="#archive">Archive</a>
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main>
+    <section class="hero section-shell">
+      <div class="hero-kicker reveal">
+        <span>CS Cinematics</span>
+        <span>Est. 2019</span>
+      </div>
+
+      <div class="theatre" aria-hidden="true" data-asset-bg="hero">
+        <div class="theatre-arch arch-one"></div>
+        <div class="theatre-arch arch-two"></div>
+        <div class="aisle"></div>
+        <div class="seat-row row-one"></div>
+        <div class="seat-row row-two"></div>
+        <div class="seat-row row-three"></div>
+      </div>
+
+      <div class="hero-copy reveal">
+        <p>We craft cinematic edits that make people stop, watch and remember - for couples, brands and directors who care about the frame.</p>
+        <div class="hero-actions">
+          <a class="pill primary" href="#showreel">View Our Work <span></span></a>
+          <a class="text-link" href="#contact">Start Your Project</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-label="Creative services">
+      <div class="marquee-track">
+        <span>Brand Films</span><b>*</b><span>Commercial Ads</span><b>*</b><span>Music Videos</span><b>*</b><span>Reels & Shorts</span><b>*</b>
+        <span>Corporate Films</span><b>*</b><span>Wedding Films</span><b>*</b><span>Brand Films</span><b>*</b><span>Commercial Ads</span><b>*</b>
+      </div>
+    </div>
+
+    <section class="showreel section-shell" id="showreel">
+      <div class="section-head reveal">
+        <div>
+          <p class="label">Reel / 2026</p>
+          <h1>The featured showreel.</h1>
+        </div>
+        <p>A three-minute reel assembled from the past year of weddings, brand films and music work.</p>
+      </div>
+
+      <button class="reel-frame reveal" type="button" data-cloudinary-video="showreel">
+        <video muted playsinline preload="metadata" poster="" data-asset-video="showreel"></video>
+        <span class="play-ring">Play</span>
+        <small class="reel-code">CS Cinematics - Showreel 26</small>
+        <small class="reel-time">Duration 03' 12"</small>
+      </button>
+    </section>
+
+    <section class="lab section-shell" id="lab">
+      <div class="lab-head reveal">
+        <div>
+          <p class="label">Post Lab / Interactive</p>
+          <h2>Feel the edit before you read the pitch.</h2>
+        </div>
+        <p>Move through grade, rhythm and motion systems built to make every frame feel intentional.</p>
+      </div>
+
+      <div class="lab-console reveal">
+        <div class="grade-stage" data-grade-stage>
+          <div class="grade-scene">
+            <span class="scan-line"></span>
+            <span class="motion-grid"></span>
+            <div class="subject-orbit">
+              <i></i><i></i><i></i>
+            </div>
+          </div>
+          <div class="grade-before" data-grade-before></div>
+          <input class="grade-slider" type="range" min="0" max="100" value="58" aria-label="Color grade comparison">
+          <div class="stage-labels">
+            <span>Raw</span>
+            <span>Grade</span>
+          </div>
+        </div>
+
+        <div class="edit-panel">
+          <div class="mode-tabs" role="group" aria-label="Editing modes">
+            <button class="mode-tab active" data-mode="rhythm">Rhythm</button>
+            <button class="mode-tab" data-mode="grade">Grade</button>
+            <button class="mode-tab" data-mode="motion">Motion</button>
+          </div>
+          <div class="mode-readout">
+            <p class="label" data-mode-label>Retention Cut</p>
+            <h3 data-mode-title>Impact beats arranged to hold attention.</h3>
+            <p data-mode-copy>Hooks, pauses, speed ramps and sound hits are mapped into a clean timeline before final polish.</p>
+          </div>
+          <div class="timeline-board" aria-hidden="true">
+            <span style="--w:18%;--x:0%;--d:.1s"></span>
+            <span style="--w:26%;--x:20%;--d:.22s"></span>
+            <span style="--w:13%;--x:49%;--d:.34s"></span>
+            <span style="--w:31%;--x:65%;--d:.46s"></span>
+          </div>
+          <div class="signal-bars" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="archive section-shell" id="archive">
+      <div class="archive-head reveal">
+        <div>
+          <p class="label">Selected Work</p>
+          <h2>A quiet archive of <em>films</em><br>we're proud of.</h2>
+        </div>
+        <div class="filter-bar" role="group" aria-label="Filter projects">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="wedding">Wedding</button>
+          <button class="filter" data-filter="commercial">Commercial</button>
+          <button class="filter" data-filter="music">Music</button>
+          <button class="filter" data-filter="reels">Reels</button>
+          <button class="filter" data-filter="corporate">Corporate</button>
+        </div>
+      </div>
+
+      <div class="work-masonry">
+        <article class="project-card tall reveal" data-category="wedding">
+          <div class="project-image" data-asset-bg="projectOne"></div>
+          <div class="project-meta"><span>Wedding Film</span><small>2026</small></div>
+          <h3>The Light Between Us</h3>
+          <p>Arora x Mehta</p>
+        </article>
+        <article class="project-card wide reveal" data-category="commercial">
+          <div class="project-image" data-asset-bg="projectTwo"></div>
+          <div class="project-meta"><span>Commercial</span><small>2025</small></div>
+          <h3>Atelier Noir - SS26</h3>
+          <p>Fashion film</p>
+        </article>
+        <article class="project-card reveal" data-category="reels">
+          <div class="project-image warm" data-asset-bg="projectThree"></div>
+          <div class="project-meta"><span>Reels</span><small>2025</small></div>
+          <h3>Kaira - Reels Series</h3>
+          <p>Social cuts</p>
+        </article>
+        <article class="project-card reveal" data-category="music">
+          <div class="project-image amber" data-asset-bg="projectFour"></div>
+          <div class="project-meta"><span>Music Video</span><small>2025</small></div>
+          <h3>North - Anthem</h3>
+          <p>Studio visuals</p>
+        </article>
+        <article class="project-card wide reveal" data-category="corporate">
+          <div class="project-image cool" data-asset-bg="projectFive"></div>
+          <div class="project-meta"><span>Corporate Film</span><small>2025</small></div>
+          <h3>Meridian Group - Annual Film</h3>
+          <p>Brand documentary</p>
+        </article>
+        <article class="project-card tall reveal" data-category="wedding">
+          <div class="project-image soft" data-asset-bg="projectSix"></div>
+          <div class="project-meta"><span>Wedding Film</span><small>2025</small></div>
+          <h3>A Quiet Vow</h3>
+          <p>Rohan x Tara</p>
+        </article>
+        <article class="project-card reveal" data-category="commercial">
+          <div class="project-image dark" data-asset-bg="projectSeven"></div>
+          <div class="project-meta"><span>Commercial</span><small>2025</small></div>
+          <h3>Aureate - Product Film</h3>
+          <p>Jewellery launch</p>
+        </article>
+        <article class="project-card reveal" data-category="commercial">
+          <div class="project-image rose" data-asset-bg="projectEight"></div>
+          <div class="project-meta"><span>Editorial</span><small>2024</small></div>
+          <h3>Solene - Editorial</h3>
+          <p>Campaign film</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="services-band" id="services">
+      <div class="section-shell services-layout">
+        <div class="services-copy reveal">
+          <p class="label">Expertise</p>
+          <h2>Craft, from the<br>first frame to the<br>final mix.</h2>
+          <p>A full post-production studio - edit, grade, sound and motion - delivered under one roof, one taste, one signature.</p>
+        </div>
+
+        <div class="service-stack">
+          <article class="service-item reveal"><span>01</span><div><h3>Wedding Films</h3><p>Polished highlight films and long-form cuts that feel romantic, restrained and made to be watched decades later.</p></div><b>+</b></article>
+          <article class="service-item reveal"><span>02</span><div><h3>Commercial Ads</h3><p>Sharp, story-first spots for brands that refuse to look like everyone else on the feed.</p></div><b>+</b></article>
+          <article class="service-item reveal"><span>03</span><div><h3>Instagram Reels</h3><p>Scroll-stopping short-form edits around rhythm, retention and one clear idea per cut.</p></div><b>+</b></article>
+          <article class="service-item reveal"><span>04</span><div><h3>YouTube Editing</h3><p>Long-form edits with structure, pacing and retention baked in from the first frame.</p></div><b>+</b></article>
+          <article class="service-item reveal"><span>05</span><div><h3>Motion Graphics</h3><p>Titles, texture and movement - designed to elevate the story, never to decorate it.</p></div><b>+</b></article>
+          <article class="service-item reveal"><span>06</span><div><h3>Color Grading</h3><p>Signature looks developed frame by frame to bridge mood and consistency.</p></div><b>+</b></article>
+          <article class="service-item reveal"><span>07</span><div><h3>Sound Design</h3><p>Sonic story and mix work that gives your film its weight.</p></div><b>+</b></article>
+          <article class="service-item reveal"><span>08</span><div><h3>Corporate Films</h3><p>Brand films, founder stories and annual reports delivered with the taste of a fashion house.</p></div><b>+</b></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-section section-shell">
+      <p class="label reveal">Studio Philosophy</p>
+      <div class="stats-line reveal">
+        <div><strong>120+</strong><span>Films delivered</span></div>
+        <div><strong>6+</strong><span>Years in post</span></div>
+        <div><strong>24</strong><span>Countries reached</span></div>
+        <div><strong>1</strong><span>Signature look</span></div>
+      </div>
+    </section>
+
+    <section class="process section-shell" id="process">
+      <div class="process-head reveal">
+        <div>
+          <p class="label">Our Process</p>
+          <h2>Five deliberate steps.</h2>
+        </div>
+        <p>Every project moves through the same disciplined pipeline, so the emotion is never a surprise.</p>
+      </div>
+
+      <div class="timeline">
+        <article class="timeline-step reveal left"><span>01</span><h3>Discover</h3><p>We start with your story, your audience and the feeling you want to leave behind.</p></article>
+        <article class="timeline-step reveal right"><span>02</span><h3>Story Build</h3><p>A narrative spine - the frame, the music, the silence - before a single cut is made.</p></article>
+        <article class="timeline-step reveal left"><span>03</span><h3>Edit</h3><p>The film takes shape through rhythm and restraint rather than trends.</p></article>
+        <article class="timeline-step reveal right"><span>04</span><h3>Refine</h3><p>Grade, sound design and detail passes until every frame earns its place.</p></article>
+        <article class="timeline-step reveal left"><span>05</span><h3>Deliver</h3><p>Final exports prepared for web, socials, cinema screens and archive.</p></article>
+      </div>
+    </section>
+
+    <section class="contact section-shell" id="contact">
+      <p class="label reveal">Start a Project</p>
+      <h2 class="reveal">Bring the footage.<br>We'll bring the feeling.</h2>
+      <div class="contact-row reveal">
+        <a href="https://www.instagram.com/cs.cinematics/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/@Csedits123" target="_blank" rel="noopener">YouTube</a>
+        <a href="mailto:hello@cscinematics.in">hello@cscinematics.in</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer section-shell">
+    <span>CS Cinematics</span>
+    <span>Stories cut to be remembered.</span>
+    <span>(c) <span id="year"></span></span>
+  </footer>
+
+  <script src="script.js?v=20260723b"></script>
+</body>
+</html>
