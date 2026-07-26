@@ -229,9 +229,17 @@ input:focus-visible {
 .hero-copy {
   position: relative;
   z-index: 4;
-  max-width: 520px;
+  max-width: 680px;
   padding-left: 2px;
   margin-bottom: 28px;
+}
+.hero-copy h1 {
+  max-width: 760px;
+  margin-bottom: 18px;
+  color: var(--white);
+  font-size: clamp(58px, 9vw, 122px);
+  line-height: .82;
+  text-shadow: 0 22px 48px rgba(0,0,0,.7);
 }
 .hero-copy p {
   max-width: 500px;
@@ -375,6 +383,7 @@ h1, h2, h3 {
   letter-spacing: 0;
 }
 .section-head h1,
+.section-head h2,
 .archive-head h2,
 .services-copy h2,
 .process-head h2,
