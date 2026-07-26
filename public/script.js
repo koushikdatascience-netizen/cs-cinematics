@@ -3,7 +3,7 @@ window.CLOUDINARY_ASSETS = {
   // The site becomes production-real only after these image/video stills are filled.
   hero: "",
   showreel: "https://res.cloudinary.com/jpi9unmr/video/upload/f_auto,q_auto/v1785068174/lv_0_20260726173347_aqmf28.mp4",
-  showreelPoster: "https://res.cloudinary.com/jpi9unmr/video/upload/h_720,q_auto/v1785068174/lv_0_20260726173347_aqmf28.jpg",
+  showreelPoster: "https://res.cloudinary.com/jpi9unmr/video/upload/w_640,f_auto,q_auto/v1785068174/lv_0_20260726173347_aqmf28.jpg",
   projectOne: "",
   projectTwo: "",
   projectThree: "",
