@@ -141,12 +141,113 @@ function applyCloudinaryAssets() {
 
 applyCloudinaryAssets();
 
+function enhanceProjectVideos() {
+  const projectVideos = Array.from(document.querySelectorAll(".project-video"));
+  const loopDelay = 2400;
+
+  const exitFullscreen = () => {
+    const activeVideo = projectVideos.find(video => (
+      document.fullscreenElement === video ||
+      document.webkitFullscreenElement === video
+    ));
+
+    projectVideos.forEach(video => {
+      const isActive = video === activeVideo;
+      video.muted = !isActive;
+      video.controls = isActive;
+      if (isActive) video.play().catch(() => {});
+    });
+  };
+
+  const openFullscreen = video => {
+    projectVideos.forEach(item => {
+      if (item !== video) {
+        item.muted = true;
+        item.controls = false;
+      }
+    });
+
+    video.muted = false;
+    video.controls = true;
+    video.play().catch(() => {});
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen().catch(() => {
+        video.muted = true;
+        video.controls = false;
+      });
+    } else if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen();
+    }
+  };
+
+  projectVideos.forEach(video => {
+    const card = video.closest(".project-card");
+    if (!card) return;
+
+    video.loop = false;
+    video.removeAttribute("loop");
+    video.muted = true;
+    video.controls = false;
+    video.playsInline = true;
+    card.classList.add("has-video");
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", `Watch ${card.querySelector("h3")?.textContent || "project"} fullscreen`);
+
+    const fullscreenControl = document.createElement("button");
+    fullscreenControl.type = "button";
+    fullscreenControl.className = "project-fullscreen";
+    fullscreenControl.setAttribute("aria-label", "Open fullscreen with audio");
+    fullscreenControl.title = "Fullscreen";
+    card.appendChild(fullscreenControl);
+
+    const triggerFullscreen = event => {
+      event.preventDefault();
+      event.stopPropagation();
+      openFullscreen(video);
+    };
+
+    fullscreenControl.addEventListener("click", triggerFullscreen);
+    card.addEventListener("click", event => {
+      if (event.target.closest("button")) return;
+      openFullscreen(video);
+    });
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        triggerFullscreen(event);
+      }
+    });
+
+    video.addEventListener("ended", () => {
+      window.setTimeout(() => {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }, loopDelay);
+    });
+
+    video.addEventListener("webkitendfullscreen", () => {
+      video.muted = true;
+      video.controls = false;
+      video.play().catch(() => {});
+    });
+  });
+
+  document.addEventListener("fullscreenchange", exitFullscreen);
+  document.addEventListener("webkitfullscreenchange", exitFullscreen);
+}
+
+enhanceProjectVideos();
+
 const reelButton = document.querySelector(".reel-frame");
 const reelVideo = document.querySelector('[data-asset-video="showreel"]');
 const playButton = document.querySelector(".play-ring");
 const fullscreenButton = document.querySelector(".fullscreen-button");
 
 if (reelButton && reelVideo) {
+  reelVideo.muted = true;
+  reelVideo.controls = false;
+
   const setReelState = playing => {
     reelButton.classList.toggle("playing", playing);
     if (playButton) {
@@ -184,12 +285,39 @@ if (reelButton && reelVideo) {
     event.stopPropagation();
     const target = reelVideo.requestFullscreen ? reelVideo : reelButton;
 
+    reelVideo.muted = false;
+    reelVideo.controls = true;
+    reelVideo.play().catch(() => {});
+
     if (target.requestFullscreen) {
-      target.requestFullscreen();
+      target.requestFullscreen().catch(() => {
+        reelVideo.muted = true;
+        reelVideo.controls = false;
+      });
     } else if (reelVideo.webkitEnterFullscreen) {
       reelVideo.webkitEnterFullscreen();
     }
   });
+
+  const syncReelFullscreenAudio = () => {
+    const isFullscreen = (
+      document.fullscreenElement === reelVideo ||
+      document.fullscreenElement === reelButton ||
+      document.webkitFullscreenElement === reelVideo ||
+      document.webkitFullscreenElement === reelButton
+    );
+
+    reelVideo.muted = !isFullscreen;
+    reelVideo.controls = isFullscreen;
+    if (isFullscreen) reelVideo.play().catch(() => {});
+  };
+
+  reelVideo.addEventListener("webkitendfullscreen", () => {
+    reelVideo.muted = true;
+    reelVideo.controls = false;
+  });
+  document.addEventListener("fullscreenchange", syncReelFullscreenAudio);
+  document.addEventListener("webkitfullscreenchange", syncReelFullscreenAudio);
 
   setReelState(false);
 }
