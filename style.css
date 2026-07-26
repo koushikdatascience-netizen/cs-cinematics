@@ -777,10 +777,13 @@ h1, h2, h3 {
 .project-card.hidden { display: none; }
 .project-card.tall { grid-row: span 4; }
 .project-card.wide { grid-column: span 4; }
-.project-image {
+.project-image,
+.project-video {
   position: absolute;
   inset: 0;
   z-index: 0;
+}
+.project-image {
   background:
     linear-gradient(180deg, transparent 0 44%, rgba(0,0,0,.78) 100%),
     radial-gradient(circle at 40% 22%, rgba(245,223,190,.72), transparent 18%),
@@ -789,6 +792,13 @@ h1, h2, h3 {
   background-size: cover;
   background-position: center;
   filter: saturate(.82) contrast(1.05);
+  transition: transform .5s ease, opacity .3s ease;
+}
+.project-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.82) contrast(1.08) brightness(.74);
   transition: transform .5s ease, opacity .3s ease;
 }
 .project-image.warm { background: linear-gradient(180deg, transparent 0 44%, rgba(0,0,0,.8) 100%), radial-gradient(circle at 48% 28%, #d66524, transparent 28%), linear-gradient(135deg, #d02f10, #070707); }
@@ -804,7 +814,9 @@ h1, h2, h3 {
   box-shadow: 0 20px 60px rgba(0,0,0,.34);
 }
 .project-card:hover .project-image,
-.project-card:focus-within .project-image {
+.project-card:focus-within .project-image,
+.project-card:hover .project-video,
+.project-card:focus-within .project-video {
   transform: scale(1.04);
   opacity: .92;
 }
@@ -816,7 +828,7 @@ h1, h2, h3 {
   background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.72));
   pointer-events: none;
 }
-.project-card > *:not(.project-image) { position: relative; z-index: 2; }
+.project-card > *:not(.project-image):not(.project-video) { position: relative; z-index: 2; }
 .project-meta {
   display: flex;
   justify-content: space-between;
