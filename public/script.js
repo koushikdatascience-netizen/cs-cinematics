@@ -64,18 +64,64 @@ mobileNav.querySelectorAll("a").forEach(link => {
   });
 });
 
+const archiveCards = Array.from(document.querySelectorAll(".project-card"));
+const archiveMoreButton = document.querySelector("[data-archive-more]");
+const archiveCount = document.querySelector("[data-archive-count]");
+let activeArchiveFilter = "all";
+let archiveVisibleLimit = 0;
+
+const getArchiveStep = () => window.matchMedia("(max-width: 700px)").matches ? 6 : 8;
+
+const updateArchiveGrid = ({ reset = false } = {}) => {
+  const step = getArchiveStep();
+  if (reset || !archiveVisibleLimit) archiveVisibleLimit = step;
+
+  const matchingCards = archiveCards.filter(card => (
+    activeArchiveFilter === "all" || card.dataset.category === activeArchiveFilter
+  ));
+
+  archiveCards.forEach(card => {
+    const matches = matchingCards.includes(card);
+    const withinLimit = matchingCards.indexOf(card) < archiveVisibleLimit;
+    card.classList.toggle("hidden", !matches || !withinLimit);
+  });
+
+  const shown = Math.min(archiveVisibleLimit, matchingCards.length);
+  const remaining = Math.max(matchingCards.length - shown, 0);
+
+  if (archiveCount) {
+    archiveCount.textContent = matchingCards.length > step
+      ? `Showing ${shown} of ${matchingCards.length} films`
+      : `${matchingCards.length} films in this view`;
+  }
+
+  if (archiveMoreButton) {
+    archiveMoreButton.hidden = remaining === 0;
+    archiveMoreButton.textContent = remaining > step ? `Show next ${step}` : `Show ${remaining} more`;
+  }
+
+  window.syncProjectVideoPlayback?.();
+};
+
 document.querySelectorAll(".filter").forEach(button => {
   button.addEventListener("click", () => {
     document.querySelectorAll(".filter").forEach(item => item.classList.remove("active"));
     button.classList.add("active");
-
-    const category = button.dataset.filter;
-    document.querySelectorAll(".project-card").forEach(card => {
-      card.classList.toggle("hidden", category !== "all" && card.dataset.category !== category);
-    });
-    window.syncProjectVideoPlayback?.();
+    activeArchiveFilter = button.dataset.filter;
+    updateArchiveGrid({ reset: true });
   });
 });
+
+archiveMoreButton?.addEventListener("click", () => {
+  archiveVisibleLimit += getArchiveStep();
+  updateArchiveGrid();
+});
+
+window.addEventListener("resize", () => {
+  updateArchiveGrid();
+});
+
+updateArchiveGrid({ reset: true });
 
 document.querySelectorAll(".mode-tab").forEach(button => {
   button.addEventListener("click", () => {
