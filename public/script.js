@@ -289,7 +289,7 @@ function enhanceProjectVideos() {
 
     fullscreenControl.addEventListener("click", triggerFullscreen);
     card.addEventListener("click", event => {
-      if (event.target.closest("button")) return;
+      if (event.target.closest("button, a")) return;
       openFullscreen(video);
     });
     card.addEventListener("keydown", event => {
