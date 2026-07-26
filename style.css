@@ -164,8 +164,12 @@ input:focus-visible {
   height: 640px;
   transform: translateX(-50%);
   background:
-    linear-gradient(180deg, rgba(0,0,0,0) 0 46%, rgba(125,33,23,.17) 61%, rgba(0,0,0,.94) 100%),
-    radial-gradient(ellipse at center 30%, rgba(12,12,12,.2) 0 28%, rgba(0,0,0,.82) 67%, #000 100%);
+    linear-gradient(112deg, transparent 0 22%, rgba(183,131,52,.22) 33%, transparent 45% 100%),
+    linear-gradient(248deg, transparent 0 58%, rgba(209,65,48,.18) 70%, transparent 82% 100%),
+    linear-gradient(180deg, rgba(0,0,0,0) 0 44%, rgba(125,33,23,.22) 61%, rgba(0,0,0,.94) 100%),
+    radial-gradient(ellipse at 50% 22%, rgba(236,232,222,.1) 0 8%, rgba(183,131,52,.08) 18%, rgba(0,0,0,.82) 67%, #000 100%);
+  background-size: 160% 100%, 170% 100%, 100% 100%, 100% 100%;
+  animation: theatreColorDrift 10s ease-in-out infinite;
   overflow: hidden;
 }
 .theatre::before {
@@ -173,44 +177,58 @@ input:focus-visible {
   position: absolute;
   inset: 36% 0 0;
   background:
-    repeating-linear-gradient(90deg, rgba(84,21,17,.7) 0 50px, rgba(56,15,14,.88) 50px 96px, rgba(0,0,0,0) 96px 108px),
+    linear-gradient(90deg, transparent 0 16%, rgba(255,214,142,.18) 26%, transparent 38% 62%, rgba(218,81,59,.16) 74%, transparent 86%),
+    repeating-linear-gradient(90deg, rgba(104,28,22,.82) 0 50px, rgba(56,15,14,.9) 50px 96px, rgba(0,0,0,0) 96px 108px),
     linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.9));
   clip-path: polygon(0 39%, 38% 28%, 45% 100%, 55% 100%, 62% 28%, 100% 39%, 100% 100%, 0 100%);
-  opacity: .74;
+  opacity: .86;
+  animation: seatGlow 6.8s ease-in-out infinite;
 }
 .theatre::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
+    repeating-radial-gradient(ellipse at 50% 38%, transparent 0 86px, rgba(236,232,222,.032) 88px 91px, transparent 94px 126px),
+    linear-gradient(118deg, transparent 0 33%, rgba(255,239,194,.16) 45%, transparent 58% 100%),
+    linear-gradient(242deg, transparent 0 42%, rgba(208,47,16,.11) 54%, transparent 67% 100%),
     linear-gradient(90deg, #000 0%, transparent 16%, transparent 84%, #000 100%),
     linear-gradient(180deg, transparent 0%, transparent 52%, #030303 92%);
+  background-size: 100% 100%, 190% 100%, 210% 100%, 100% 100%, 100% 100%;
+  animation: lightSweep 8.5s ease-in-out infinite;
 }
 .theatre-arch {
   position: absolute;
   left: 50%;
-  top: 13%;
-  width: 80%;
+  top: 8%;
+  width: 92%;
   aspect-ratio: 2 / 1;
-  border: 1px solid rgba(255,255,255,.025);
+  border: 1px solid rgba(255,245,214,.075);
   border-bottom: 0;
   border-radius: 50% 50% 0 0;
   transform: translateX(-50%);
-  box-shadow: inset 0 22px 38px rgba(0,0,0,.72);
+  box-shadow:
+    inset 0 28px 42px rgba(0,0,0,.72),
+    0 -22px 70px rgba(183,131,52,.1),
+    0 0 110px rgba(209,65,48,.045);
+  animation: archBreath 7.5s ease-in-out infinite;
 }
-.arch-two { width: 58%; top: 25%; opacity: .62; }
+.arch-two { width: 66%; top: 23%; opacity: .7; animation-delay: -2.2s; }
 .aisle {
   position: absolute;
   left: 50%;
   bottom: 40px;
-  width: 176px;
-  height: 258px;
+  width: 210px;
+  height: 292px;
   transform: translateX(-50%);
   background:
-    repeating-linear-gradient(180deg, #bfb9a9 0 8px, #161616 8px 22px);
+    linear-gradient(90deg, transparent, rgba(255,239,194,.38), transparent),
+    repeating-linear-gradient(180deg, #e0d8c5 0 8px, #171717 8px 23px);
+  background-size: 220% 100%, 100% 100%;
   clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%);
-  opacity: .72;
-  filter: drop-shadow(0 0 26px rgba(255,216,154,.2));
+  opacity: .82;
+  filter: drop-shadow(0 0 34px rgba(255,216,154,.28));
+  animation: aisleShimmer 4.2s ease-in-out infinite;
 }
 .seat-row {
   position: absolute;
@@ -219,12 +237,16 @@ input:focus-visible {
   height: 44px;
   transform: translateX(-50%);
   border-radius: 10px 10px 0 0;
-  background: repeating-linear-gradient(90deg, #42120f 0 56px, #2e0c0a 56px 64px);
+  background:
+    linear-gradient(90deg, transparent, rgba(255,216,154,.1), transparent),
+    repeating-linear-gradient(90deg, #551711 0 56px, #2e0c0a 56px 64px);
+  background-size: 180% 100%, 100% 100%;
   opacity: .44;
+  animation: rowLight 5.8s ease-in-out infinite;
 }
 .row-one { width: 90%; bottom: 46px; }
-.row-two { width: 78%; bottom: 96px; opacity: .36; }
-.row-three { width: 64%; bottom: 144px; opacity: .28; }
+.row-two { width: 78%; bottom: 96px; opacity: .38; animation-delay: -1.6s; }
+.row-three { width: 64%; bottom: 144px; opacity: .32; animation-delay: -3.1s; }
 
 .hero-copy {
   position: relative;
@@ -714,6 +736,37 @@ h1, h2, h3 {
 @keyframes scan {
   0%, 100% { transform: translateY(0); opacity: .2; }
   50% { transform: translateY(280px); opacity: .8; }
+}
+@keyframes theatreColorDrift {
+  0%, 100% { background-position: 0% 0, 100% 0, 0 0, 0 0; filter: saturate(1); }
+  45% { background-position: 78% 0, 22% 0, 0 0, 0 0; filter: saturate(1.28); }
+  70% { background-position: 100% 0, 0% 0, 0 0, 0 0; filter: saturate(1.12); }
+}
+@keyframes lightSweep {
+  0%, 100% { background-position: 0 0, -30% 0, 130% 0, 0 0, 0 0; opacity: .76; }
+  50% { background-position: 0 0, 120% 0, -18% 0, 0 0, 0 0; opacity: 1; }
+}
+@keyframes seatGlow {
+  0%, 100% { filter: brightness(.9) saturate(1); opacity: .74; }
+  50% { filter: brightness(1.24) saturate(1.32); opacity: .95; }
+}
+@keyframes archBreath {
+  0%, 100% {
+    opacity: .72;
+    box-shadow: inset 0 28px 42px rgba(0,0,0,.72), 0 -22px 70px rgba(183,131,52,.1), 0 0 110px rgba(209,65,48,.045);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: inset 0 22px 38px rgba(0,0,0,.62), 0 -26px 90px rgba(255,215,151,.18), 0 0 150px rgba(209,65,48,.11);
+  }
+}
+@keyframes aisleShimmer {
+  0%, 100% { background-position: -60% 0, 0 0; opacity: .74; }
+  50% { background-position: 160% 0, 0 0; opacity: .94; }
+}
+@keyframes rowLight {
+  0%, 100% { background-position: -50% 0, 0 0; filter: brightness(.9); }
+  50% { background-position: 150% 0, 0 0; filter: brightness(1.2); }
 }
 @keyframes slowTurn {
   to { transform: translate(-50%, -50%) rotate(360deg); }
@@ -1396,6 +1449,12 @@ h1, h2, h3 {
   }
 
   .scan-line,
+  .theatre,
+  .theatre::before,
+  .theatre::after,
+  .theatre-arch,
+  .aisle,
+  .seat-row,
   .subject-orbit,
   .timeline-board span,
   .signal-bars i {
