@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://res.cloudinary.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260726d">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -94,12 +94,13 @@
         <p>A three-minute reel assembled from the past year of weddings, brand films and music work.</p>
       </div>
 
-      <button class="reel-frame reveal" type="button" data-cloudinary-video="showreel">
+      <div class="reel-frame reveal" role="group" aria-label="Featured showreel video" data-cloudinary-video="showreel">
         <video muted playsinline preload="metadata" poster="" data-asset-video="showreel"></video>
-        <span class="play-ring">Play</span>
+        <button class="play-ring" type="button" aria-label="Play showreel" aria-pressed="false">Play</button>
+        <button class="fullscreen-button" type="button" aria-label="View showreel fullscreen">Full screen</button>
         <small class="reel-code">CS Cinematics - Showreel 26</small>
         <small class="reel-time">Duration 03' 12"</small>
-      </button>
+      </div>
     </section>
 
     <section class="lab section-shell" id="lab">
@@ -286,6 +287,6 @@
     <span>(c) <span id="year"></span></span>
   </footer>
 
-  <script src="script.js?v=20260726c"></script>
+  <script src="script.js?v=20260726d"></script>
 </body>
 </html>

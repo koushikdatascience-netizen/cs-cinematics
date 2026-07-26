@@ -143,17 +143,53 @@ applyCloudinaryAssets();
 
 const reelButton = document.querySelector(".reel-frame");
 const reelVideo = document.querySelector('[data-asset-video="showreel"]');
+const playButton = document.querySelector(".play-ring");
+const fullscreenButton = document.querySelector(".fullscreen-button");
 
 if (reelButton && reelVideo) {
-  reelButton.addEventListener("click", () => {
+  const setReelState = playing => {
+    reelButton.classList.toggle("playing", playing);
+    if (playButton) {
+      playButton.textContent = playing ? "Pause" : "Play";
+      playButton.setAttribute("aria-label", playing ? "Pause showreel" : "Play showreel");
+      playButton.setAttribute("aria-pressed", String(playing));
+    }
+  };
+
+  const toggleReel = () => {
     if (!reelVideo.src) return;
 
     if (reelVideo.paused) {
       reelVideo.play();
-      reelButton.classList.add("playing");
     } else {
       reelVideo.pause();
-      reelButton.classList.remove("playing");
+    }
+  };
+
+  playButton?.addEventListener("click", event => {
+    event.stopPropagation();
+    toggleReel();
+  });
+
+  reelVideo.addEventListener("click", toggleReel);
+  reelButton.addEventListener("click", event => {
+    if (event.target === reelButton) toggleReel();
+  });
+
+  reelVideo.addEventListener("play", () => setReelState(true));
+  reelVideo.addEventListener("pause", () => setReelState(false));
+  reelVideo.addEventListener("ended", () => setReelState(false));
+
+  fullscreenButton?.addEventListener("click", event => {
+    event.stopPropagation();
+    const target = reelVideo.requestFullscreen ? reelVideo : reelButton;
+
+    if (target.requestFullscreen) {
+      target.requestFullscreen();
+    } else if (reelVideo.webkitEnterFullscreen) {
+      reelVideo.webkitEnterFullscreen();
     }
   });
+
+  setReelState(false);
 }
