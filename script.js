@@ -73,6 +73,7 @@ document.querySelectorAll(".filter").forEach(button => {
     document.querySelectorAll(".project-card").forEach(card => {
       card.classList.toggle("hidden", category !== "all" && card.dataset.category !== category);
     });
+    window.syncProjectVideoPlayback?.();
   });
 });
 
@@ -144,6 +145,34 @@ applyCloudinaryAssets();
 function enhanceProjectVideos() {
   const projectVideos = Array.from(document.querySelectorAll(".project-video"));
   const loopDelay = 2400;
+  const visibleVideos = new Set();
+
+  const isFullscreenVideo = video => (
+    document.fullscreenElement === video ||
+    document.webkitFullscreenElement === video
+  );
+
+  const shouldPlayInline = video => {
+    const card = video.closest(".project-card");
+    return card && !card.classList.contains("hidden") && visibleVideos.has(video) && !document.fullscreenElement && !document.webkitFullscreenElement;
+  };
+
+  const syncInlinePlayback = () => {
+    projectVideos.forEach(video => {
+      if (isFullscreenVideo(video)) return;
+
+      video.muted = true;
+      video.controls = false;
+
+      if (shouldPlayInline(video)) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  };
+
+  window.syncProjectVideoPlayback = syncInlinePlayback;
 
   const exitFullscreen = () => {
     const activeVideo = projectVideos.find(video => (
@@ -157,6 +186,8 @@ function enhanceProjectVideos() {
       video.controls = isActive;
       if (isActive) video.play().catch(() => {});
     });
+
+    if (!activeVideo) syncInlinePlayback();
   };
 
   const openFullscreen = video => {
@@ -164,6 +195,7 @@ function enhanceProjectVideos() {
       if (item !== video) {
         item.muted = true;
         item.controls = false;
+        item.pause();
       }
     });
 
@@ -187,6 +219,7 @@ function enhanceProjectVideos() {
 
     video.loop = false;
     video.removeAttribute("loop");
+    video.removeAttribute("autoplay");
     video.muted = true;
     video.controls = false;
     video.playsInline = true;
@@ -222,16 +255,35 @@ function enhanceProjectVideos() {
     video.addEventListener("ended", () => {
       window.setTimeout(() => {
         video.currentTime = 0;
-        video.play().catch(() => {});
+        if (isFullscreenVideo(video) || shouldPlayInline(video)) video.play().catch(() => {});
       }, loopDelay);
     });
 
     video.addEventListener("webkitendfullscreen", () => {
       video.muted = true;
       video.controls = false;
-      video.play().catch(() => {});
+      syncInlinePlayback();
     });
   });
+
+  if ("IntersectionObserver" in window) {
+    const videoObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          visibleVideos.add(video);
+        } else {
+          visibleVideos.delete(video);
+        }
+      });
+      syncInlinePlayback();
+    }, { rootMargin: "180px 0px", threshold: 0.18 });
+
+    projectVideos.forEach(video => videoObserver.observe(video));
+  } else {
+    projectVideos.forEach(video => visibleVideos.add(video));
+    syncInlinePlayback();
+  }
 
   document.addEventListener("fullscreenchange", exitFullscreen);
   document.addEventListener("webkitfullscreenchange", exitFullscreen);
