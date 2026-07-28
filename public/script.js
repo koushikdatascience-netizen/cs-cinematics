@@ -16,23 +16,6 @@ window.CLOUDINARY_ASSETS = {
 
 const assets = window.CLOUDINARY_ASSETS;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const modeContent = {
-  rhythm: {
-    label: "Retention Cut",
-    title: "Impact beats arranged to hold attention.",
-    copy: "Hooks, pauses, speed ramps and sound hits are mapped into a clean timeline before final polish."
-  },
-  grade: {
-    label: "Color System",
-    title: "A signature grade built frame by frame.",
-    copy: "Contrast, warmth, skin tone and highlight rolloff are shaped until the image feels expensive without feeling artificial."
-  },
-  motion: {
-    label: "Motion Design",
-    title: "Titles, texture and graphics that move with intent.",
-    copy: "Kinetic type, tracking elements and graphic accents are timed to the edit instead of sitting on top of it."
-  }
-};
 const header = document.querySelector(".topbar");
 const menuButton = document.querySelector(".menu-toggle");
 const mobileNav = document.querySelector(".mobile-nav");
@@ -122,31 +105,6 @@ window.addEventListener("resize", () => {
 });
 
 updateArchiveGrid({ reset: true });
-
-document.querySelectorAll(".mode-tab").forEach(button => {
-  button.addEventListener("click", () => {
-    const selected = modeContent[button.dataset.mode];
-    if (!selected) return;
-
-    document.querySelectorAll(".mode-tab").forEach(item => item.classList.remove("active"));
-    button.classList.add("active");
-    document.querySelector("[data-mode-label]").textContent = selected.label;
-    document.querySelector("[data-mode-title]").textContent = selected.title;
-    document.querySelector("[data-mode-copy]").textContent = selected.copy;
-  });
-});
-
-const gradeSlider = document.querySelector(".grade-slider");
-const gradeBefore = document.querySelector("[data-grade-before]");
-
-if (gradeSlider && gradeBefore) {
-  const syncGrade = () => {
-    gradeBefore.style.width = `${gradeSlider.value}%`;
-  };
-
-  gradeSlider.addEventListener("input", syncGrade);
-  syncGrade();
-}
 
 if (prefersReducedMotion) {
   document.querySelectorAll(".reveal").forEach(element => element.classList.add("visible"));
