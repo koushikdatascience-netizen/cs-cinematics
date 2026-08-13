@@ -1098,6 +1098,11 @@ h1, h2, h3 {
 }
 
 @media (max-width: 900px) {
+  body::before {
+    display: none;
+    animation: none;
+  }
+
   .section-shell { width: min(100% - 24px, 620px); }
   .topbar {
     grid-template-columns: 1fr auto;

@@ -16,6 +16,7 @@ window.CLOUDINARY_ASSETS = {
 
 const assets = window.CLOUDINARY_ASSETS;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const supportsDesktopPointer = window.matchMedia("(min-width: 901px) and (pointer: fine)").matches;
 const header = document.querySelector(".topbar");
 const menuButton = document.querySelector(".menu-toggle");
 const mobileNav = document.querySelector(".mobile-nav");
@@ -24,7 +25,7 @@ window.addEventListener("scroll", () => {
   header.classList.toggle("scrolled", window.scrollY > 30);
 });
 
-if (!prefersReducedMotion) {
+if (!prefersReducedMotion && supportsDesktopPointer) {
   window.addEventListener("pointermove", event => {
     document.body.style.setProperty("--spot-x", `${event.clientX}px`);
     document.body.style.setProperty("--spot-y", `${event.clientY}px`);
