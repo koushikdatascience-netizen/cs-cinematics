@@ -28,28 +28,8 @@ body {
   color: var(--ink);
   font-family: var(--sans);
   overflow-x: hidden;
-  --spot-x: 50vw;
-  --spot-y: 20vh;
   user-select: none;
   -webkit-user-select: none;
-}
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 18;
-  pointer-events: none;
-  opacity: .82;
-  mix-blend-mode: screen;
-  background:
-    radial-gradient(circle at var(--spot-x) var(--spot-y), rgba(255,246,214,.34), transparent 7rem),
-    radial-gradient(circle at calc(var(--spot-x) + 72px) calc(var(--spot-y) + 36px), rgba(255,96,58,.28), transparent 15rem),
-    radial-gradient(circle at calc(var(--spot-x) - 92px) calc(var(--spot-y) - 52px), rgba(218,165,72,.26), transparent 17rem),
-    radial-gradient(circle at calc(var(--spot-x) + 18px) calc(var(--spot-y) - 98px), rgba(80,164,190,.16), transparent 14rem),
-    repeating-radial-gradient(circle at var(--spot-x) var(--spot-y), transparent 0 3.2rem, rgba(255,226,164,.075) 3.35rem 3.5rem, transparent 3.75rem 6.8rem);
-  background-size: 100% 100%, 108% 108%, 112% 112%, 118% 118%, 150% 150%;
-  animation: pointerWave 3.8s ease-in-out infinite;
-  transition: opacity .22s ease;
 }
 body.menu-open { overflow: hidden; }
 a { color: inherit; text-decoration: none; }
@@ -372,23 +352,6 @@ input:focus-visible {
 }
 .marquee:hover .marquee-track {
   animation-play-state: paused;
-}
-@keyframes pointerWave {
-  0%, 100% {
-    background-size: 100% 100%, 108% 108%, 112% 112%, 118% 118%, 132% 132%;
-    filter: hue-rotate(0deg) saturate(1.05);
-    opacity: .72;
-  }
-  45% {
-    background-size: 108% 108%, 120% 120%, 128% 128%, 132% 132%, 178% 178%;
-    filter: hue-rotate(14deg) saturate(1.28);
-    opacity: .9;
-  }
-  72% {
-    background-size: 102% 102%, 114% 114%, 122% 122%, 126% 126%, 152% 152%;
-    filter: hue-rotate(-10deg) saturate(1.18);
-    opacity: .8;
-  }
 }
 @keyframes drift {
   from { transform: translateX(0); }
@@ -915,7 +878,7 @@ h1, h2, h3 {
     linear-gradient(90deg, rgba(0,0,0,.055) 1px, transparent 1px),
     linear-gradient(180deg, rgba(255,255,255,.38), transparent 34%, rgba(0,0,0,.05));
   background-size: 74px 100%, 100% 100%;
-  transform: translateY(calc(var(--spot-y) * -.018));
+  transform: translateY(-16px);
 }
 .process::after {
   content: "";
@@ -923,7 +886,7 @@ h1, h2, h3 {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at var(--spot-x) var(--spot-y), rgba(183,131,52,.2), transparent 18rem),
+    radial-gradient(circle at 54% 28%, rgba(183,131,52,.18), transparent 18rem),
     linear-gradient(90deg, rgba(0,0,0,.08), transparent 14%, transparent 86%, rgba(0,0,0,.08));
   mix-blend-mode: multiply;
   opacity: .56;
@@ -1004,7 +967,7 @@ h1, h2, h3 {
   background:
     linear-gradient(115deg, transparent 0 38%, rgba(248,246,239,.22) 48%, transparent 58% 100%),
     repeating-linear-gradient(90deg, transparent 0 80px, rgba(248,246,239,.08) 81px, transparent 82px 160px);
-  transform: translateY(calc(var(--spot-y) * -.012));
+  transform: translateY(-10px);
 }
 .contact .label { color: rgba(248,246,239,.58); }
 .contact h2 { color: var(--white); }
@@ -1098,11 +1061,6 @@ h1, h2, h3 {
 }
 
 @media (max-width: 900px) {
-  body::before {
-    display: none;
-    animation: none;
-  }
-
   .section-shell { width: min(100% - 24px, 620px); }
   .topbar {
     grid-template-columns: 1fr auto;
@@ -1245,10 +1203,6 @@ h1, h2, h3 {
   .marquee-track {
     animation: none !important;
     transform: none !important;
-  }
-
-  body::before {
-    animation: none !important;
   }
 
   .reveal {
