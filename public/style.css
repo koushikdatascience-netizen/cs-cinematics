@@ -810,6 +810,9 @@ h1, h2, h3 {
   border-bottom: 1px solid rgba(248,246,239,.12);
   transition: background .24s ease, padding-left .24s ease, border-color .24s ease, box-shadow .24s ease;
 }
+.service-item figure {
+  display: none;
+}
 .service-item:hover,
 .service-item:focus-within {
   padding-left: 14px;
@@ -847,8 +850,8 @@ h1, h2, h3 {
   }
 
   .services-layout {
-    grid-template-columns: .52fr minmax(0, 1.48fr);
-    gap: 60px;
+    grid-template-columns: minmax(0, 1.32fr) .58fr;
+    gap: 72px;
     min-height: calc(100svh - 64px);
     position: sticky;
     top: 64px;
@@ -861,6 +864,7 @@ h1, h2, h3 {
   }
 
   .services-copy {
+    order: 2;
     position: static;
     display: flex;
     flex-direction: column;
@@ -868,6 +872,7 @@ h1, h2, h3 {
   }
 
   .service-stack {
+    order: 1;
     position: relative;
     display: flex;
     align-items: center;
@@ -877,9 +882,9 @@ h1, h2, h3 {
 
   .service-rail {
     display: flex;
-    gap: 18px;
+    gap: 22px;
     width: 100%;
-    min-height: min(58svh, 560px);
+    min-height: min(66svh, 620px);
     padding: 4px 2px 26px;
     align-items: stretch;
     overflow-x: auto;
@@ -910,20 +915,108 @@ h1, h2, h3 {
   }
 
   .service-rail .service-item {
-    width: clamp(360px, 38vw, 460px);
-    min-height: min(54svh, 520px);
-    flex: 0 0 clamp(360px, 38vw, 460px);
-    align-content: start;
+    position: relative;
+    width: 100%;
+    min-height: min(62svh, 590px);
+    flex: 0 0 calc(100% - 2px);
+    overflow: hidden;
+    padding: 34px 38px;
+    align-content: stretch;
     display: grid;
-    grid-template-columns: 42px minmax(0, 1fr) 24px;
-    align-items: start;
+    grid-template-columns: 46px minmax(0, 1fr) 28px;
+    grid-template-rows: 1fr auto;
+    align-items: end;
+    border: 1px solid rgba(248,246,239,.16);
+    background: rgba(4,4,4,.72);
     scroll-snap-align: start;
     transform-style: preserve-3d;
     will-change: transform;
   }
 
+  .service-rail .service-item figure {
+    position: absolute;
+    inset: 0;
+    display: block;
+    margin: 0;
+    overflow: hidden;
+    transform: translateZ(0);
+  }
+
+  .service-rail .service-item figure::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(5,5,5,.82), rgba(5,5,5,.2) 45%, rgba(5,5,5,.64)),
+      linear-gradient(180deg, rgba(5,5,5,.18), rgba(5,5,5,.84));
+  }
+
+  .service-rail .service-item img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    filter: saturate(.92) contrast(1.08) brightness(.74);
+    transform: scale(1.02);
+    transition: transform .7s ease, filter .7s ease;
+  }
+
+  .service-rail .service-item-generated figure {
+    background:
+      radial-gradient(circle at 28% 24%, rgba(183,131,52,.34), transparent 28%),
+      radial-gradient(circle at 78% 70%, rgba(248,246,239,.16), transparent 30%),
+      linear-gradient(135deg, rgba(12,12,12,.98), rgba(43,32,22,.82) 50%, rgba(8,8,8,.96));
+  }
+
+  .service-rail .service-item-generated figure::before {
+    content: "";
+    position: absolute;
+    inset: 12%;
+    border: 1px solid rgba(248,246,239,.16);
+    background:
+      linear-gradient(rgba(248,246,239,.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(248,246,239,.1) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(circle, #000, transparent 72%);
+  }
+
+  .service-rail .service-item:hover img,
+  .service-rail .service-item:focus-within img {
+    filter: saturate(1.05) contrast(1.12) brightness(.86);
+    transform: scale(1.07);
+  }
+
   .service-rail .service-item > * {
+    position: relative;
+    z-index: 1;
     transform: translateZ(18px);
+  }
+
+  .service-rail .service-item span {
+    align-self: start;
+  }
+
+  .service-rail .service-item div {
+    grid-column: 2;
+    grid-row: 2;
+    max-width: 560px;
+  }
+
+  .service-rail .service-item h3 {
+    font-size: clamp(36px, 4.4vw, 64px);
+    line-height: .9;
+    text-shadow: 0 18px 42px rgba(0,0,0,.6);
+  }
+
+  .service-rail .service-item p {
+    max-width: 460px;
+    color: rgba(248,246,239,.78);
+    font-size: 13px;
+  }
+
+  .service-rail .service-item b {
+    align-self: start;
+    justify-self: end;
   }
 
   .service-rail-control {
