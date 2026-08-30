@@ -1105,6 +1105,7 @@ h1, h2, h3 {
 }
 
 .process {
+  --process-depth: 0;
   position: relative;
   overflow: hidden;
   padding: 108px 0 132px;
@@ -1127,7 +1128,9 @@ h1, h2, h3 {
     linear-gradient(90deg, rgba(0,0,0,.055) 1px, transparent 1px),
     linear-gradient(180deg, rgba(255,255,255,.38), transparent 34%, rgba(0,0,0,.05));
   background-size: 74px 100%, 100% 100%;
-  transform: translateY(-16px);
+  background-position: 0 calc(var(--process-depth, 0) * -90px), 0 0;
+  transform: translate3d(0, calc(-28px + (var(--process-depth, 0) * 54px)), 0);
+  transition: transform .18s linear, background-position .18s linear;
 }
 .process::after {
   content: "";
@@ -1139,6 +1142,8 @@ h1, h2, h3 {
     linear-gradient(90deg, rgba(0,0,0,.08), transparent 14%, transparent 86%, rgba(0,0,0,.08));
   mix-blend-mode: multiply;
   opacity: .56;
+  transform: translate3d(0, calc((var(--process-depth, 0) - .5) * 42px), 0) scale(1.04);
+  transition: transform .18s linear;
 }
 .process .label,
 .process-head p:last-child {
@@ -1160,12 +1165,23 @@ h1, h2, h3 {
   background: linear-gradient(180deg, transparent, rgba(0,0,0,.16), rgba(183,131,52,.68), transparent);
 }
 .timeline-step {
+  --step-side: 0;
   position: relative;
   width: calc(50% - 36px);
   min-height: 142px;
+  padding: 18px 18px 20px;
+  border: 1px solid transparent;
+  transition: border-color .28s ease, background .28s ease, box-shadow .28s ease;
 }
-.timeline-step.left { justify-self: start; text-align: right; }
-.timeline-step.right { justify-self: end; }
+.timeline-step.left {
+  --step-side: -1;
+  justify-self: start;
+  text-align: right;
+}
+.timeline-step.right {
+  --step-side: 1;
+  justify-self: end;
+}
 .timeline-step::after {
   content: "";
   position: absolute;
@@ -1176,6 +1192,7 @@ h1, h2, h3 {
   background: #f6f0e5;
   box-shadow: 0 0 0 7px rgba(0,0,0,.045), 0 0 22px rgba(183,131,52,.28);
   transform: rotate(45deg);
+  transition: background .28s ease, box-shadow .28s ease, transform .28s ease;
 }
 .timeline-step.left::after { right: -41px; }
 .timeline-step.right::after { left: -41px; }
@@ -1194,6 +1211,22 @@ h1, h2, h3 {
   color: rgba(17,17,17,.6);
   font-size: 11px;
   line-height: 1.7;
+}
+.timeline-step.is-active {
+  border-color: rgba(183,131,52,.28);
+  background: rgba(255,255,255,.24);
+  box-shadow: 0 18px 60px rgba(27,21,15,.08);
+}
+.timeline-step.is-active::after {
+  background: var(--gold);
+  box-shadow: 0 0 0 9px rgba(183,131,52,.14), 0 0 30px rgba(183,131,52,.42);
+  transform: rotate(45deg) scale(1.28);
+}
+.timeline-step.is-active h3 {
+  color: #000;
+}
+.timeline-step.is-active p {
+  color: rgba(17,17,17,.72);
 }
 
 /* === Scroll-driven timeline parallax === */
@@ -1252,8 +1285,14 @@ h1, h2, h3 {
 
 .timeline-js-active .timeline-step {
   animation: none;
-  opacity: var(--step-progress, 1);
-  transform: translateY(calc((1 - var(--step-progress, 1)) * 32px));
+  opacity: calc(.36 + (var(--step-progress, 1) * .64));
+  transform:
+    translate3d(
+      calc(var(--step-side, 0) * (1 - var(--step-progress, 1)) * -30px),
+      calc((1 - var(--step-progress, 1)) * 42px),
+      0
+    )
+    scale(calc(.982 + (var(--step-progress, 1) * .018)));
 }
 
 .contact {

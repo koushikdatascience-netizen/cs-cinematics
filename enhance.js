@@ -105,18 +105,33 @@
 
     const updateTimeline = () => {
       timelineFrame = 0;
+      const viewportCenter = window.innerHeight * .52;
       const processRect = process.getBoundingClientRect();
-      const processTravel = processRect.height + window.innerHeight;
-      const processProgress = clamp((window.innerHeight - processRect.top) / processTravel);
-      timeline.style.setProperty("--timeline-progress", String(clamp(processProgress * 1.35)));
+      const timelineRect = timeline.getBoundingClientRect();
+      const processProgress = clamp((window.innerHeight - processRect.top) / (processRect.height + window.innerHeight));
+      const spineProgress = clamp((window.innerHeight * .62 - timelineRect.top) / Math.max(timelineRect.height, 1));
+      let activeStep = null;
+      let activeDistance = Infinity;
+
+      process.style.setProperty("--process-depth", String(processProgress));
+      timeline.style.setProperty("--timeline-progress", String(spineProgress));
 
       steps.forEach((step, index) => {
         const rect = step.getBoundingClientRect();
         const start = window.innerHeight * (index % 2 ? .94 : .88);
         const end = window.innerHeight * .5;
         const progress = clamp((start - rect.top) / (start - end));
+        const distance = Math.abs((rect.top + rect.height * .5) - viewportCenter);
+
+        if (distance < activeDistance) {
+          activeDistance = distance;
+          activeStep = step;
+        }
+
         step.style.setProperty("--step-progress", String(progress));
       });
+
+      steps.forEach(step => step.classList.toggle("is-active", step === activeStep));
     };
 
     const requestTimelineUpdate = () => {
