@@ -55,10 +55,8 @@
     event.preventDefault();
     const isProjectLink = prepareProjectTransition(link);
 
-    if (isProjectLink && document.startViewTransition) {
-      document.startViewTransition(() => {
-        window.location.href = url.href;
-      });
+    if (isProjectLink) {
+      window.location.href = url.href;
       return;
     }
 

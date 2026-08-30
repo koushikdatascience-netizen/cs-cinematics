@@ -73,6 +73,10 @@
   opacity: 1;
 }
 
+@view-transition {
+  navigation: auto;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: .46s;
