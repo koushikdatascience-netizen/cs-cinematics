@@ -175,12 +175,6 @@ function enhanceProjectVideos() {
   const projectVideos = Array.from(document.querySelectorAll(".project-video"));
   const loopDelay = 2400;
   const visibleVideos = new Set();
-  const supportsDialog = typeof HTMLDialogElement !== "undefined" && "showModal" in HTMLDialogElement.prototype;
-  let lightboxDialog;
-  let lightboxVideo;
-  let lightboxTitle;
-  let activeLightboxVideo;
-  let previousActiveElement;
 
   const isFullscreenVideo = video => (
     document.fullscreenElement === video ||
@@ -208,100 +202,6 @@ function enhanceProjectVideos() {
   };
 
   window.syncProjectVideoPlayback = syncInlinePlayback;
-
-  const getVisibleProjectVideos = () => projectVideos.filter(video => {
-    const card = video.closest(".project-card");
-    return card && !card.classList.contains("hidden");
-  });
-
-  const createLightbox = () => {
-    if (lightboxDialog || !supportsDialog) return lightboxDialog;
-
-    lightboxDialog = document.createElement("dialog");
-    lightboxDialog.className = "project-lightbox";
-    lightboxDialog.setAttribute("aria-label", "Project video viewer");
-    lightboxDialog.innerHTML = `
-      <div class="project-lightbox-inner">
-        <button class="project-lightbox-close" type="button" aria-label="Close video">Close</button>
-        <video class="project-lightbox-video" controls playsinline preload="metadata"></video>
-        <div class="project-lightbox-bar">
-          <button class="project-lightbox-step" type="button" data-direction="-1" aria-label="Previous project">Prev</button>
-          <p class="project-lightbox-title"></p>
-          <button class="project-lightbox-step" type="button" data-direction="1" aria-label="Next project">Next</button>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(lightboxDialog);
-    lightboxVideo = lightboxDialog.querySelector(".project-lightbox-video");
-    lightboxTitle = lightboxDialog.querySelector(".project-lightbox-title");
-
-    const closeLightbox = () => lightboxDialog.close();
-
-    lightboxDialog.querySelector(".project-lightbox-close").addEventListener("click", closeLightbox);
-    lightboxDialog.addEventListener("click", event => {
-      if (event.target === lightboxDialog) closeLightbox();
-    });
-    lightboxDialog.querySelectorAll("[data-direction]").forEach(button => {
-      button.addEventListener("click", () => stepLightbox(Number(button.dataset.direction)));
-    });
-    lightboxDialog.addEventListener("keydown", event => {
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        stepLightbox(-1);
-      } else if (event.key === "ArrowRight") {
-        event.preventDefault();
-        stepLightbox(1);
-      }
-    });
-    lightboxDialog.addEventListener("close", () => {
-      lightboxVideo.pause();
-      lightboxVideo.removeAttribute("src");
-      lightboxVideo.removeAttribute("poster");
-      lightboxVideo.load();
-      activeLightboxVideo = null;
-      previousActiveElement?.focus?.();
-      syncInlinePlayback();
-    });
-
-    return lightboxDialog;
-  };
-
-  const setLightboxVideo = video => {
-    activeLightboxVideo = video;
-    lightboxVideo.src = video.currentSrc || video.src;
-    if (video.poster) lightboxVideo.poster = video.poster;
-    lightboxVideo.muted = false;
-    lightboxVideo.controls = true;
-    lightboxTitle.textContent = video.closest(".project-card")?.querySelector("h3")?.textContent || "Project film";
-    lightboxVideo.load();
-    lightboxVideo.play().catch(() => {});
-  };
-
-  const stepLightbox = direction => {
-    if (!activeLightboxVideo) return;
-    const visibleProjectVideos = getVisibleProjectVideos();
-    const currentIndex = visibleProjectVideos.indexOf(activeLightboxVideo);
-    if (currentIndex === -1) return;
-    const nextIndex = (currentIndex + direction + visibleProjectVideos.length) % visibleProjectVideos.length;
-    setLightboxVideo(visibleProjectVideos[nextIndex]);
-  };
-
-  const openLightbox = video => {
-    if (!supportsDialog) {
-      openFullscreen(video);
-      return;
-    }
-
-    createLightbox();
-    previousActiveElement = document.activeElement;
-    projectVideos.forEach(item => {
-      item.muted = true;
-      item.controls = false;
-      item.pause();
-    });
-    setLightboxVideo(video);
-    if (!lightboxDialog.open) lightboxDialog.showModal();
-  };
 
   const exitFullscreen = () => {
     const activeVideo = projectVideos.find(video => (
@@ -367,13 +267,13 @@ function enhanceProjectVideos() {
     const triggerFullscreen = event => {
       event.preventDefault();
       event.stopPropagation();
-      openLightbox(video);
+      openFullscreen(video);
     };
 
     fullscreenControl.addEventListener("click", triggerFullscreen);
     card.addEventListener("click", event => {
       if (event.target.closest("button, a")) return;
-      openLightbox(video);
+      openFullscreen(video);
     });
     card.addEventListener("keydown", event => {
       if (event.key === "Enter" || event.key === " ") {

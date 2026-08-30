@@ -849,79 +849,6 @@ h1, h2, h3 {
   background-attachment: fixed, scroll;
   border-top: 1px solid rgba(248,246,239,.08);
 }
-.project-lightbox {
-  width: min(1120px, calc(100% - 34px));
-  max-width: none;
-  padding: 0;
-  border: 1px solid rgba(183,131,52,.36);
-  background: var(--bg);
-  color: var(--ink);
-  box-shadow: 0 32px 120px rgba(0,0,0,.75), 0 0 60px rgba(183,131,52,.14);
-}
-.project-lightbox::backdrop {
-  background: rgba(0,0,0,.78);
-  backdrop-filter: blur(18px);
-}
-.project-lightbox-inner {
-  position: relative;
-  padding: clamp(12px, 2vw, 18px);
-}
-.project-lightbox-close,
-.project-lightbox-step {
-  min-height: 34px;
-  border: 1px solid rgba(248,246,239,.22);
-  border-radius: 999px;
-  background: rgba(248,246,239,.05);
-  color: rgba(248,246,239,.82);
-  cursor: pointer;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  transition: background .22s ease, color .22s ease, border-color .22s ease, transform .22s ease;
-}
-.project-lightbox-close {
-  position: absolute;
-  z-index: 2;
-  right: 26px;
-  top: 26px;
-  padding: 0 14px;
-  background: rgba(5,5,5,.72);
-  backdrop-filter: blur(12px);
-}
-.project-lightbox-video {
-  width: 100%;
-  max-height: min(76vh, 760px);
-  display: block;
-  background: #000;
-  object-fit: contain;
-}
-.project-lightbox-bar {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 14px;
-  align-items: center;
-  padding-top: 14px;
-}
-.project-lightbox-step {
-  padding: 0 14px;
-}
-.project-lightbox-title {
-  color: rgba(248,246,239,.68);
-  font-size: 10px;
-  letter-spacing: .16em;
-  text-align: center;
-  text-transform: uppercase;
-}
-.project-lightbox-close:hover,
-.project-lightbox-close:focus-visible,
-.project-lightbox-step:hover,
-.project-lightbox-step:focus-visible {
-  transform: translateY(-1px);
-  border-color: var(--gold);
-  background: rgba(183,131,52,.16);
-  color: var(--white);
-}
 .stats-inner,
 .process-inner,
 .contact-inner {
@@ -1456,10 +1383,6 @@ h1, h2, h3 {
   .project-case-link {
     display: inline-flex;
   }
-  .project-lightbox {
-    width: calc(100% - 20px);
-  }
-  .project-lightbox-bar,
   .watch-grid,
   .watch-next,
   .watch-next-card {
