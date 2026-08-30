@@ -968,6 +968,49 @@ h1, h2, h3 {
   line-height: 1.7;
 }
 
+/* === Scroll-driven timeline parallax === */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .timeline::before {
+      transform: scaleY(0);
+      transform-origin: top;
+      animation: timelineSpineFill linear both;
+      animation-timeline: scroll(nearest block);
+      animation-range: entry 8% exit 72%;
+    }
+
+    .timeline-step {
+      animation: timelineStepDepth linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+
+    .timeline-step.left {
+      animation-range: entry 0% entry 58%;
+    }
+
+    .timeline-step.right {
+      animation-range: entry 7% entry 65%;
+    }
+  }
+}
+
+@keyframes timelineSpineFill {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes timelineStepDepth {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .contact {
   position: relative;
   overflow: hidden;
