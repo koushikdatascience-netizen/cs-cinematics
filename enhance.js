@@ -91,4 +91,41 @@
     };
     requestAnimationFrame(update);
   }
+
+  const process = document.querySelector(".process");
+  const timeline = document.querySelector(".timeline");
+  const steps = Array.from(document.querySelectorAll(".timeline-step"));
+
+  if (process && timeline && steps.length) {
+    document.documentElement.classList.add("timeline-js-active");
+
+    const clamp = value => Math.max(0, Math.min(value, 1));
+
+    let timelineFrame = 0;
+
+    const updateTimeline = () => {
+      timelineFrame = 0;
+      const processRect = process.getBoundingClientRect();
+      const processTravel = processRect.height + window.innerHeight;
+      const processProgress = clamp((window.innerHeight - processRect.top) / processTravel);
+      timeline.style.setProperty("--timeline-progress", String(clamp(processProgress * 1.35)));
+
+      steps.forEach((step, index) => {
+        const rect = step.getBoundingClientRect();
+        const start = window.innerHeight * (index % 2 ? .94 : .88);
+        const end = window.innerHeight * .5;
+        const progress = clamp((start - rect.top) / (start - end));
+        step.style.setProperty("--step-progress", String(progress));
+      });
+    };
+
+    const requestTimelineUpdate = () => {
+      if (timelineFrame) return;
+      timelineFrame = requestAnimationFrame(updateTimeline);
+    };
+
+    window.addEventListener("scroll", requestTimelineUpdate, { passive: true });
+    window.addEventListener("resize", requestTimelineUpdate, { passive: true });
+    requestTimelineUpdate();
+  }
 })();

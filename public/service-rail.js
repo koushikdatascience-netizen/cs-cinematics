@@ -11,6 +11,7 @@
   const rail = document.getElementById("serviceRail");
   if (!rail) return;
 
+  const section = rail.closest(".services-band");
   const previousButton = document.createElement("button");
   const nextButton = document.createElement("button");
   let dragging = false;
@@ -46,6 +47,19 @@
     rail.scrollBy({ left: direction * distance, behavior: "smooth" });
   };
 
+  const canScrollRail = delta => {
+    const maxScroll = rail.scrollWidth - rail.clientWidth;
+    const atStart = rail.scrollLeft <= 2;
+    const atEnd = rail.scrollLeft >= maxScroll - 2;
+    return !((delta < 0 && atStart) || (delta > 0 && atEnd));
+  };
+
+  const isSectionActive = () => {
+    if (!section) return false;
+    const rect = section.getBoundingClientRect();
+    return rect.top <= 72 && rect.bottom >= window.innerHeight - 72;
+  };
+
   const stopGlide = () => {
     if (!glideFrame) return;
     cancelAnimationFrame(glideFrame);
@@ -73,14 +87,19 @@
   rail.addEventListener("wheel", event => {
     if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
 
-    const maxScroll = rail.scrollWidth - rail.clientWidth;
-    const atStart = rail.scrollLeft <= 0;
-    const atEnd = rail.scrollLeft >= maxScroll - 1;
-    const scrollingOutward = (event.deltaY < 0 && atStart) || (event.deltaY > 0 && atEnd);
-    if (scrollingOutward) return;
+    if (!canScrollRail(event.deltaY)) return;
 
     event.preventDefault();
     rail.scrollLeft += event.deltaY;
+    updateControls();
+  }, { passive: false });
+
+  window.addEventListener("wheel", event => {
+    if (!section || rail.contains(event.target) || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+    if (!isSectionActive() || !canScrollRail(event.deltaY)) return;
+
+    event.preventDefault();
+    rail.scrollBy({ left: event.deltaY, behavior: "auto" });
     updateControls();
   }, { passive: false });
 

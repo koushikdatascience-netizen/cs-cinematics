@@ -841,9 +841,18 @@ h1, h2, h3 {
 
 /* === Desktop expertise drag rail === */
 @media (min-width: 901px) {
+  .services-band {
+    min-height: 210svh;
+    padding: 0;
+  }
+
   .services-layout {
     grid-template-columns: .52fr minmax(0, 1.48fr);
     gap: 60px;
+    min-height: calc(100svh - 64px);
+    position: sticky;
+    top: 64px;
+    align-items: stretch;
   }
 
   .services-copy,
@@ -851,15 +860,28 @@ h1, h2, h3 {
     min-width: 0;
   }
 
+  .services-copy {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .service-stack {
     position: relative;
+    display: flex;
+    align-items: center;
+    padding-top: 72px;
+    padding-bottom: 72px;
   }
 
   .service-rail {
     display: flex;
     gap: 18px;
     width: 100%;
-    padding: 4px 2px 18px;
+    min-height: min(58svh, 560px);
+    padding: 4px 2px 26px;
+    align-items: stretch;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-padding-left: 1px;
@@ -889,9 +911,12 @@ h1, h2, h3 {
 
   .service-rail .service-item {
     width: clamp(360px, 38vw, 460px);
-    min-height: 204px;
+    min-height: min(54svh, 520px);
     flex: 0 0 clamp(360px, 38vw, 460px);
     align-content: start;
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) 24px;
+    align-items: start;
     scroll-snap-align: start;
     transform-style: preserve-3d;
     will-change: transform;
@@ -1124,6 +1149,18 @@ h1, h2, h3 {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.timeline-js-active .timeline::before {
+  animation: none;
+  transform: scaleY(var(--timeline-progress, 0));
+  transform-origin: top;
+}
+
+.timeline-js-active .timeline-step {
+  animation: none;
+  opacity: var(--step-progress, 1);
+  transform: translateY(calc((1 - var(--step-progress, 1)) * 32px));
 }
 
 .contact {
