@@ -839,6 +839,43 @@ h1, h2, h3 {
   line-height: 1.7;
 }
 
+/* === Desktop expertise drag rail === */
+@media (min-width: 901px) {
+  .service-rail {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-left: 1px;
+    scroll-snap-type: x mandatory;
+    cursor: grab;
+    scrollbar-width: none;
+    perspective: 1100px;
+  }
+
+  .service-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .service-rail.is-grabbing {
+    cursor: grabbing;
+  }
+
+  .service-rail .service-item {
+    width: clamp(420px, 44vw, 540px);
+    min-height: 204px;
+    flex: 0 0 clamp(420px, 44vw, 540px);
+    align-content: start;
+    scroll-snap-align: start;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  .service-rail .service-item > * {
+    transform: translateZ(18px);
+  }
+}
+
 .stats-section {
   position: relative;
   overflow: hidden;
