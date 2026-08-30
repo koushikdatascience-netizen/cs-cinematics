@@ -841,20 +841,46 @@ h1, h2, h3 {
 
 /* === Desktop expertise drag rail === */
 @media (min-width: 901px) {
+  .services-layout {
+    grid-template-columns: .52fr minmax(0, 1.48fr);
+    gap: 60px;
+  }
+
+  .services-copy,
+  .service-stack {
+    min-width: 0;
+  }
+
+  .service-stack {
+    position: relative;
+  }
+
   .service-rail {
     display: flex;
     gap: 18px;
+    width: 100%;
+    padding: 4px 2px 18px;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-padding-left: 1px;
     scroll-snap-type: x mandatory;
     cursor: grab;
-    scrollbar-width: none;
+    scrollbar-color: rgba(183,131,52,.62) rgba(248,246,239,.08);
+    scrollbar-width: thin;
     perspective: 1100px;
   }
 
   .service-rail::-webkit-scrollbar {
-    display: none;
+    height: 7px;
+  }
+
+  .service-rail::-webkit-scrollbar-track {
+    background: rgba(248,246,239,.08);
+  }
+
+  .service-rail::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, var(--gold), rgba(183,131,52,.38));
+    border-radius: 999px;
   }
 
   .service-rail.is-grabbing {
@@ -862,9 +888,9 @@ h1, h2, h3 {
   }
 
   .service-rail .service-item {
-    width: clamp(420px, 44vw, 540px);
+    width: clamp(360px, 38vw, 460px);
     min-height: 204px;
-    flex: 0 0 clamp(420px, 44vw, 540px);
+    flex: 0 0 clamp(360px, 38vw, 460px);
     align-content: start;
     scroll-snap-align: start;
     transform-style: preserve-3d;
@@ -873,6 +899,53 @@ h1, h2, h3 {
 
   .service-rail .service-item > * {
     transform: translateZ(18px);
+  }
+
+  .service-rail-control {
+    position: absolute;
+    z-index: 4;
+    top: -52px;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(248,246,239,.22);
+    border-radius: 50%;
+    background: rgba(5,5,5,.62);
+    color: rgba(248,246,239,.86);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    backdrop-filter: blur(12px);
+    transition: background .22s ease, color .22s ease, border-color .22s ease, opacity .22s ease, transform .22s ease;
+  }
+
+  .service-rail-control:hover,
+  .service-rail-control:focus-visible {
+    transform: translateY(-1px);
+    border-color: var(--gold);
+    background: rgba(183,131,52,.16);
+    color: var(--white);
+  }
+
+  .service-rail-control:disabled {
+    opacity: .35;
+    cursor: default;
+  }
+
+  .service-rail-control:disabled:hover {
+    transform: none;
+    border-color: rgba(248,246,239,.22);
+    background: rgba(5,5,5,.62);
+    color: rgba(248,246,239,.86);
+  }
+
+  .service-rail-prev {
+    right: 48px;
+  }
+
+  .service-rail-next {
+    right: 0;
   }
 }
 
@@ -1006,28 +1079,33 @@ h1, h2, h3 {
 }
 
 /* === Scroll-driven timeline parallax === */
-@supports (animation-timeline: scroll()) {
+@supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
+    .process {
+      view-timeline-axis: block;
+      view-timeline-name: --process-timeline;
+    }
+
     .timeline::before {
       transform: scaleY(0);
       transform-origin: top;
       animation: timelineSpineFill linear both;
-      animation-timeline: scroll(nearest block);
-      animation-range: entry 8% exit 72%;
+      animation-timeline: --process-timeline;
+      animation-range: entry 22% cover 66%;
     }
 
     .timeline-step {
       animation: timelineStepDepth linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 60%;
+      animation-timeline: view(block);
+      animation-range: entry 0% cover 34%;
     }
 
     .timeline-step.left {
-      animation-range: entry 0% entry 58%;
+      animation-range: entry 0% cover 32%;
     }
 
     .timeline-step.right {
-      animation-range: entry 7% entry 65%;
+      animation-range: entry 8% cover 40%;
     }
   }
 }

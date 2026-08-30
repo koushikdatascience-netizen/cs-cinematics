@@ -11,6 +11,8 @@
   const rail = document.getElementById("serviceRail");
   if (!rail) return;
 
+  const previousButton = document.createElement("button");
+  const nextButton = document.createElement("button");
   let dragging = false;
   let pointerId = null;
   let startX = 0;
@@ -18,6 +20,31 @@
   let lastSample = { x: 0, time: 0 };
   let velocity = 0;
   let glideFrame = 0;
+
+  previousButton.type = "button";
+  previousButton.className = "service-rail-control service-rail-prev";
+  previousButton.setAttribute("aria-label", "Show previous expertise services");
+  previousButton.textContent = "<";
+
+  nextButton.type = "button";
+  nextButton.className = "service-rail-control service-rail-next";
+  nextButton.setAttribute("aria-label", "Show next expertise services");
+  nextButton.textContent = ">";
+
+  rail.parentElement.append(previousButton, nextButton);
+
+  const updateControls = () => {
+    const maxScroll = rail.scrollWidth - rail.clientWidth;
+    previousButton.disabled = rail.scrollLeft <= 2;
+    nextButton.disabled = rail.scrollLeft >= maxScroll - 2;
+  };
+
+  const scrollByCard = direction => {
+    const card = rail.querySelector(".service-item");
+    const gap = parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap) || 18;
+    const distance = card ? card.getBoundingClientRect().width + gap : rail.clientWidth * .8;
+    rail.scrollBy({ left: direction * distance, behavior: "smooth" });
+  };
 
   const stopGlide = () => {
     if (!glideFrame) return;
@@ -54,6 +81,7 @@
 
     event.preventDefault();
     rail.scrollLeft += event.deltaY;
+    updateControls();
   }, { passive: false });
 
   rail.addEventListener("pointerdown", event => {
@@ -92,6 +120,7 @@
     rail.releasePointerCapture(pointerId);
     pointerId = null;
     startGlide();
+    updateControls();
   };
 
   rail.addEventListener("pointerup", release);
@@ -102,7 +131,13 @@
     pointerId = null;
     rail.classList.remove("is-grabbing");
     startGlide();
+    updateControls();
   });
+
+  previousButton.addEventListener("click", () => scrollByCard(-1));
+  nextButton.addEventListener("click", () => scrollByCard(1));
+  rail.addEventListener("scroll", updateControls, { passive: true });
+  window.addEventListener("resize", updateControls, { passive: true });
 
   rail.querySelectorAll(".service-item").forEach(card => {
     const target = { x: 0, y: 0 };
@@ -141,4 +176,6 @@
       requestTilt();
     });
   });
+
+  updateControls();
 })();
