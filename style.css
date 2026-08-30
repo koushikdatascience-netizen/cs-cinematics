@@ -132,12 +132,14 @@ input:focus-visible {
 
 .hero {
   position: relative;
+  width: 100%;
+  margin: 0;
   min-height: 640px;
   height: 88svh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 128px 0 82px;
+  padding: 128px max(22px, calc((100vw - var(--max)) / 2 + 22px)) 82px;
   isolation: isolate;
   overflow: hidden;
 }
@@ -1348,11 +1350,12 @@ h1, h2, h3 {
   gap: 28px;
   align-items: stretch;
   margin-top: 48px;
-  border: 1px solid rgba(248,246,239,.16);
+  border: 1px solid rgba(248,246,239,.2);
   background:
     linear-gradient(135deg, rgba(248,246,239,.08), rgba(248,246,239,.025)),
     rgba(5,5,5,.7);
-  box-shadow: 0 28px 90px rgba(0,0,0,.32);
+  box-shadow: 0 28px 90px rgba(0,0,0,.32), 0 0 0 1px rgba(183,131,52,.08);
+  overflow: hidden;
 }
 .contact-map > div {
   padding: 34px;
@@ -1390,10 +1393,11 @@ h1, h2, h3 {
 }
 .contact-map iframe {
   width: 100%;
-  min-height: 360px;
+  min-height: 420px;
   border: 0;
-  filter: grayscale(1) invert(.9) contrast(.9) brightness(.72);
-  opacity: .86;
+  background: #f8f6ef;
+  filter: saturate(1.08) contrast(1.02);
+  opacity: 1;
 }
 
 .footer {
@@ -1692,10 +1696,14 @@ h1, h2, h3 {
     font-size: 38px;
   }
   .hero {
+    width: 100%;
+    margin: 0;
     min-height: 620px;
     height: 92svh;
     padding-top: 88px;
+    padding-right: 12px;
     padding-bottom: 56px;
+    padding-left: 12px;
   }
   .hero-kicker { top: 112px; left: 0; }
   .theatre {
@@ -1761,7 +1769,7 @@ h1, h2, h3 {
     grid-template-columns: 1fr;
   }
   .contact-map iframe {
-    min-height: 300px;
+    min-height: 340px;
   }
   .footer {
     flex-direction: column;
