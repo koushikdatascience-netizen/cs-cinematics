@@ -7,6 +7,7 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const lowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 6;
   const smallViewport = window.matchMedia("(max-width: 900px)").matches;
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const theatre = document.querySelector(".theatre");
 
   if (!theatre || reduceMotion || lowPower || smallViewport) return;
@@ -68,12 +69,29 @@
     resize();
     window.addEventListener("resize", resize, { passive: true });
 
+    const pointer = { x: 0, y: 0 };
+    const pointerLerp = { x: 0, y: 0 };
+    if (finePointer) {
+      theatre.addEventListener("mousemove", event => {
+        const rect = theatre.getBoundingClientRect();
+        pointer.x = ((event.clientX - rect.left) / rect.width - .5) * 2;
+        pointer.y = ((event.clientY - rect.top) / rect.height - .5) * -2;
+      }, { passive: true });
+      theatre.addEventListener("mouseleave", () => {
+        pointer.x = 0;
+        pointer.y = 0;
+      }, { passive: true });
+    }
+
     const animate = time => {
       const scroll = Math.min(window.scrollY / 900, 1);
-      dust.rotation.y = time * .000035 + scroll * .18;
-      dust.rotation.x = Math.sin(time * .00018) * .035;
+      pointerLerp.x += (pointer.x - pointerLerp.x) * .07;
+      pointerLerp.y += (pointer.y - pointerLerp.y) * .07;
+      dust.rotation.y = time * .000035 + scroll * .18 + pointerLerp.x * .08;
+      dust.rotation.x = Math.sin(time * .00018) * .035 + pointerLerp.y * .06;
       ringGroup.rotation.z = time * .00008 + scroll * .22;
-      ringGroup.position.y = .35 - scroll * .32;
+      ringGroup.position.x = pointerLerp.x * .12;
+      ringGroup.position.y = .35 - scroll * .32 + pointerLerp.y * .08;
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
     };

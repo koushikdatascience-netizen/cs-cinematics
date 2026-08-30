@@ -13,6 +13,43 @@
     return;
   }
 
+  const runHeroEntrance = () => {
+    const theatre = document.querySelector(".theatre");
+    const pieces = document.querySelectorAll(".theatre-arch, .aisle, .seat-row, .hero-copy > *");
+    if (!theatre || !pieces.length || !("animate" in theatre)) return;
+
+    theatre.animate([
+      { opacity: .72, transform: "translateX(-50%) scale(1.018)", filter: "brightness(.7)" },
+      { opacity: 1, transform: "translateX(-50%) scale(1)", filter: "brightness(1)" }
+    ], {
+      duration: 820,
+      easing: "cubic-bezier(.2,.72,.16,1)",
+      fill: "both"
+    });
+
+    pieces.forEach((piece, index) => {
+      piece.animate([
+        { opacity: 0, transform: `${getComputedStyle(piece).transform === "none" ? "" : getComputedStyle(piece).transform} translateY(${index % 2 ? 18 : 28}px)` },
+        { opacity: 1, transform: getComputedStyle(piece).transform === "none" ? "translateY(0)" : getComputedStyle(piece).transform }
+      ], {
+        duration: 620,
+        delay: 90 + index * 58,
+        easing: "cubic-bezier(.2,.72,.16,1)",
+        fill: "backwards"
+      });
+    });
+  };
+
+  const scheduleHeroEntrance = () => {
+    window.setTimeout(runHeroEntrance, document.readyState === "loading" ? 180 : 80);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", scheduleHeroEntrance, { once: true });
+  } else {
+    scheduleHeroEntrance();
+  }
+
   const counters = document.querySelectorAll(".stats-line strong");
   if ("IntersectionObserver" in window && counters.length) {
     const counterObserver = new IntersectionObserver(entries => {

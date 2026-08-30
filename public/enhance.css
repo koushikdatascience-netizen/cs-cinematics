@@ -73,6 +73,17 @@
   opacity: 1;
 }
 
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: .46s;
+  animation-timing-function: cubic-bezier(.2,.72,.16,1);
+}
+
+::view-transition-group(*) {
+  animation-duration: .62s;
+  animation-timing-function: cubic-bezier(.2,.72,.16,1);
+}
+
 .reel-frame.video-revealing video {
   animation: videoMaskReveal .95s cubic-bezier(.2,.72,.16,1) both;
 }
